@@ -82,4 +82,34 @@ class InfoGeneral {
       'creationDate': creationDate,
     };
   }
+
+  // Convertir un mapa de SQLite a un objeto InfoGeneral
+  factory InfoGeneral.fromMap(Map<String, dynamic> map) {
+    return InfoGeneral(
+      id: map['id'],
+      typeRegister: map['typeRegister'],
+      numberRegister: map['numberRegister'],
+      consent: map['consent'],
+      departament: map['departament'],
+      zonalUnit: map['zonalUnit'],
+      municipality: map['municipality'],
+      territory: map['territory'],
+      microterritory: map['microterritory'],
+      nameBranding: map['nameBranding'],
+      address: map['address'],
+      longitud: map['longitud'],
+      latitud: map['latitud'],
+      homeLocation: map['homeLocation'],
+      idFamilia: map['idFamilia'],
+      estratum: map['estratum'],
+      households: map['households'],
+      numFamilies: map['numFamilies'],
+      people: map['people'],
+      basicTeam: map['basicTeam'],
+      idPrimaryProvider: map['idPrimaryProvider'],
+      pollster: map['pollster'],
+      idFicha: map['idFicha'],
+      creationDate: map['creationDate'],
+    );
+  }
 }

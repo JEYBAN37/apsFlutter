@@ -28,38 +28,38 @@ class DatabaseHelper {
         await db.execute('''
           CREATE TABLE infogeneral(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            typeRegister INTEGER,
-            numberRegister INTEGER,
-            consent INTEGER,
+            typeRegister INTEGER DEFAULT 2,
+            numberRegister INTEGER DEFAULT 1,
+            consent INTEGER DEFAULT 1,
             departament TEXT,
-            zonalUnit TEXT,
+            zonalUnit TEXT DEFAULT 'UZPE999',
             municipality TEXT,
-            territory TEXT,
-            microterritory TEXT,
+            territory TEXT DEFAULT 'T99',
+            microterritory TEXT DEFAULT 'T99',
             nameBranding TEXT,
             address TEXT,
-            longitud REAL,
-            latitud REAL,
+            longitud REAL DEFAULT -77.27403200,
+            latitud REAL DEFAULT 1.19739490,
             homeLocation TEXT,
-            idFamilia TEXT,
+            idFamilia TEXT DEFAULT ('52UZPE99952001T99T99EBSF' || ABS(RANDOM() % 10000)),
             estratum INTEGER,
-            households TEXT,
-            numFamilies INTEGER,
-            people INTEGER,
-            basicTeam TEXT,
+            households TEXT DEFAULT '1',
+            numFamilies INTEGER DEFAULT 1,
+            people INTEGER DEFAULT 1,
+            basicTeam TEXT DEFAULT '52UZPE99952001T99T99EBS',
             idPrimaryProvider TEXT,
-            pollster TEXT,
-            idFicha TEXT,
-            creationDate TEXT
+            pollster TEXT DEFAULT 1,
+            idFicha TEXT DEFAULT 'CF',
+            creationDate TEXT DEFAULT DATE('now')
           )
         ''');
       },
     );
   }
 
-  Future<int> insertInfoGeneral(InfoGeneral infoGeneral) async {
+  Future<int> insertInfoGeneral(Map<String, dynamic> infoGeneral) async {
     final db = await database;
-    return await db.insert('infogeneral', infoGeneral.toMap());
+    return await db.insert('infogeneral', infoGeneral);
   }
 
   Future<List<InfoGeneral>> getInfoGeneralList() async {

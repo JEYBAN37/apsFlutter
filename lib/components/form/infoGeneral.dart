@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart'; // Validadores
 import 'package:aps/constants/enumerations.dart'; // Ruta para las enumeraciones // Validadores
+import 'package:aps/databse_helper.dart';
 
 class InfoGeneral extends StatefulWidget {
   const InfoGeneral({super.key});
@@ -11,12 +12,13 @@ class InfoGeneral extends StatefulWidget {
 }
 
 class _InfoGeneralState extends State<InfoGeneral> {
+  final dbHelper = DatabaseHelper();
   final _formKey = GlobalKey<FormBuilderState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Formulario con FormBuilder'),
+        title: const Text('Formulario con Información General'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -90,7 +92,7 @@ class _InfoGeneralState extends State<InfoGeneral> {
                     name: 'municipality',
                     decoration: InputDecoration(
                       labelText: 'Municipio',
-                      labelStyle: TextStyle(
+                      labelStyle: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.blueGrey,
@@ -136,7 +138,7 @@ class _InfoGeneralState extends State<InfoGeneral> {
                     name: 'nameBranding',
                     decoration: InputDecoration(
                       labelText: 'Barrio',
-                      labelStyle: TextStyle(
+                      labelStyle: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.blueGrey,
@@ -226,7 +228,7 @@ class _InfoGeneralState extends State<InfoGeneral> {
                     name: 'estratum',
                     decoration: InputDecoration(
                       labelText: 'Estrato',
-                      labelStyle: TextStyle(
+                      labelStyle: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.blueGrey,
@@ -328,11 +330,30 @@ class _InfoGeneralState extends State<InfoGeneral> {
 
                   // Botón para guardar
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState?.saveAndValidate() ?? false) {
-                        final formData = _formKey.currentState?.value;
-                        print('Datos del formulario: $formData');
-                        // Aquí puedes guardar en la base de datos
+                        // Obtener los datos del formulario
+                        final formData = _formKey.currentState!.value;
+
+                        // Construir el mapa para la base de datos
+                        final Map<String, dynamic> infoGeneralMap = {
+                          'departament': formData['departament'],
+                          'municipality': formData['municipality'],
+                          'nameBranding': formData['nameBranding'],
+                          'address': formData['address'],
+                          'homeLocation': formData['homeLocation'],
+                          'estratum': formData['estratum'],
+                          'idPrimaryProvider': formData['idPrimaryProvider'],
+                        };
+
+                        // Guardar en la base de datos
+                        final id = await dbHelper.insertInfoGeneral(infoGeneralMap);
+                        print('Datos guardados con ID: $id');
+
+                        // Mostrar confirmación
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Datos guardados exitosamente')),
+                        );
                       } else {
                         print('Formulario no válido');
                       }
