@@ -26,32 +26,33 @@ class DatabaseHelper {
       version: 1,
       onCreate: (db, version) async {
         await db.execute('''
-          CREATE TABLE infogeneral(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            typeRegister INTEGER DEFAULT 2,
-            numberRegister INTEGER DEFAULT 1,
-            consent INTEGER DEFAULT 1,
-            departament TEXT,
-            zonalUnit TEXT DEFAULT 'UZPE999',
-            municipality TEXT,
-            territory TEXT DEFAULT 'T99',
-            microterritory TEXT DEFAULT 'T99',
-            nameBranding TEXT,
-            address TEXT,
-            longitud REAL DEFAULT -77.27403200,
-            latitud REAL DEFAULT 1.19739490,
-            homeLocation TEXT,
-            idFamilia TEXT DEFAULT ('52UZPE99952001T99T99EBSF' || ABS(RANDOM() % 10000)),
-            estratum INTEGER,
-            households TEXT DEFAULT '1',
-            numFamilies INTEGER DEFAULT 1,
-            people INTEGER DEFAULT 1,
-            basicTeam TEXT DEFAULT '52UZPE99952001T99T99EBS',
-            idPrimaryProvider TEXT,
-            pollster TEXT DEFAULT 1,
-            idFicha TEXT DEFAULT 'CF',
-            creationDate TEXT DEFAULT DATE('now')
-          )
+                CREATE TABLE infogeneral(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                typeRegister INTEGER DEFAULT 2,
+                numberRegister INTEGER DEFAULT 1,
+                consent INTEGER DEFAULT 1,
+                departament TEXT,
+                zonalUnit TEXT DEFAULT 'UZPE999',
+                municipality TEXT,
+                territory TEXT DEFAULT 'T99',
+                microterritory TEXT DEFAULT 'T99',
+                nameBranding TEXT,
+                address TEXT,
+                longitud REAL DEFAULT -77.27403200,
+                latitud REAL DEFAULT 1.19739490,
+                homeLocation TEXT,
+                idFamilia TEXT DEFAULT '52UZPE99952001T99T99EBSF',
+                estratum INTEGER,
+                households TEXT DEFAULT '1',
+                numFamilies INTEGER DEFAULT 1,
+                people INTEGER DEFAULT 1,
+                basicTeam TEXT DEFAULT '52UZPE99952001T99T99EBS',
+                idPrimaryProvider TEXT,
+                pollster TEXT DEFAULT '1',
+                idFicha TEXT DEFAULT 'CF',
+                creationDate TEXT DEFAULT DATE (now)
+            );
+
         ''');
       },
     );
